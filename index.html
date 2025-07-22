@@ -1,79 +1,1340 @@
-<div class="preloader">
-  <div class="preloader-counter">0</div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBANANA - চ্যাটব্যানানা</title>
+    <style>
+        :root {
+            --primary-color: rgba(255, 255, 255, 0.8);
+            --secondary-color: rgba(0, 0, 0, 0.8);
+            --bg-color: rgba(245, 245, 245, 0.85);
+            --text-color: rgba(51, 51, 51, 0.9);
+            --chat-bg: rgba(255, 255, 255, 0.7);
+            --user-bubble: rgba(227, 242, 253, 0.8);
+            --bot-bubble: rgba(241, 241, 241, 0.8);
+            --shadow: rgba(0, 0, 0, 0.1);
+            --header-bg: rgba(255, 255, 255, 0.7);
+            --header-border: rgba(229, 229, 229, 0.5);
+            --error-color: rgba(255, 68, 68, 0.8);
+            --success-color: rgba(0, 200, 81, 0.8);
+            --blur-amount: 8px;
+            --border-radius: 12px;
+            --legal-text-color: rgba(100, 100, 100, 0.7);
+            --input-area-height: 80px;
+        }
 
-<div class="container">
-  <div class="grid-container">
-    <div class="grid" id="grid">
-      <div class="grid-item" data-index="0">
-        <div class="grid-item-img" style="background-image:url(https://cdn.cosmos.so/dfff1381-f09c-454b-b98d-8a79161c3d25?format=jpeg)"></div>
-      </div>
-      <div class="grid-item" data-index="1">
-        <div class="grid-item-img" style="background-image:url(https://cdn.cosmos.so/c7af8b26-313a-40e4-9081-85f7fde00c22?format=jpeg)"></div>
-      </div>
-      <div class="grid-item" data-index="2">
-        <div class="grid-item-img" style="background-image:url(https://cdn.cosmos.so/03a36d87-af8c-4cfe-bfed-7a3dd502404b.?format=jpeg)"></div>
-      </div>
-      <div class="grid-item" data-index="3">
-        <div class="grid-item-img" style="background-image:url(https://cdn.cosmos.so/bdb2a659-2838-4055-a82e-f145c3fd4467?format=jpeg)"></div>
-      </div>
-      <div class="grid-item target" id="target-item" data-index="4">
-        <div class="grid-item-img" style="background-image:url(https://cdn.cosmos.so/fddfc757-d9c3-44f1-af6e-a607c3746738?format=jpeg)"></div>
-      </div>
-      <div class="grid-item" data-index="5">
-        <div class="grid-item-img" style="background-image:url(https://cdn.cosmos.so/51a307de-a9ba-4c9e-ad24-beff1ce023d0?format=jpeg)"></div>
-      </div>
-    </div>
-  </div>
-</div>
+        .dark-mode {
+            --primary-color: rgba(0, 0, 0, 0.8);
+            --secondary-color: rgba(255, 255, 255, 0.8);
+            --bg-color: rgba(52, 53, 65, 0.85);
+            --text-color: rgba(245, 245, 245, 0.9);
+            --chat-bg: rgba(68, 70, 84, 0.7);
+            --user-bubble: rgba(52, 53, 65, 0.8);
+            --bot-bubble: rgba(86, 88, 105, 0.8);
+            --shadow: rgba(255, 255, 255, 0.05);
+            --header-bg: rgba(52, 53, 65, 0.7);
+            --header-border: rgba(86, 88, 105, 0.5);
+            --error-color: rgba(255, 102, 102, 0.8);
+            --success-color: rgba(0, 209, 82, 0.8);
+            --legal-text-color: rgba(180, 180, 180, 0.7);
+        }
 
-<!-- Slide layers in stacking order -->
-<!-- Base layer - current slide -->
-<div class="slider-image" id="slider-image"></div>
-<!-- Background parallax layer -->
-<div class="slider-image-bg" id="slider-image-bg"></div>
-<!-- Top layer - next slide -->
-<div class="slider-image-next" id="slider-image-next"></div>
-<!-- Transition overlay -->
-<div class="transition-overlay" id="transition-overlay"></div>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            transition: all 0.3s ease-in-out;
+        }
 
-<div class="content" id="content">
-  <h1 class="content-title">
-    <span>MONOCHROME SERIES</span>
-  </h1>
-  <div class="content-paragraph" id="content-paragraph">
-    Without color, we see differently. Form and texture speak louder. The world simplified to light and dark reveals truths that color often conceals. In this space between extremes, we find clarity. The photograph becomes a mirror reflecting not just what we see, but how we see.
-  </div>
-</div>
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+        }
 
-<div class="thumbnails">
-  <div class="thumbnail" data-index="0">
-    <div class="thumbnail-img" style="background-image:url(https://cdn.cosmos.so/dfff1381-f09c-454b-b98d-8a79161c3d25?format=jpeg)"></div>
-  </div>
-  <div class="thumbnail" data-index="1">
-    <div class="thumbnail-img" style="background-image:url(https://cdn.cosmos.so/c7af8b26-313a-40e4-9081-85f7fde00c22?format=jpeg)"></div>
-  </div>
-  <div class="thumbnail" data-index="2">
-    <div class="thumbnail-img" style="background-image:url(https://cdn.cosmos.so/03a36d87-af8c-4cfe-bfed-7a3dd502404b.?format=jpeg)"></div>
-  </div>
-  <div class="thumbnail" data-index="3">
-    <div class="thumbnail-img" style="background-image:url(https://cdn.cosmos.so/bdb2a659-2838-4055-a82e-f145c3fd4467?format=jpeg)"></div>
-  </div>
-  <div class="thumbnail active" data-index="4">
-    <div class="thumbnail-img" style="background-image:url(https://cdn.cosmos.so/fddfc757-d9c3-44f1-af6e-a607c3746738?format=jpeg)"></div>
-  </div>
-  <div class="thumbnail" data-index="5">
-    <div class="thumbnail-img" style="background-image:url(https://cdn.cosmos.so/51a307de-a9ba-4c9e-ad24-beff1ce023d0?format=jpeg)"></div>
-  </div>
-</div>
+        header {
+            background-color: var(--header-bg);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--header-border);
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            z-index: 100;
+            height: 60px;
+        }
 
-<div class="switch" id="switch">
-  <button class="switch-button switch-button-grid switch-button-current">
-    <span class="indicator-dot"></span>
-    GRID
-  </button>
-  <button class="switch-button switch-button-slider">
-    <span class="indicator-dot"></span>
-    SLIDER
-  </button>
-</div>
+        .app-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .app-brand img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .app-brand h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+
+        .app-brand p {
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+
+        .header-btn:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .settings-btn:hover {
+            transform: rotate(30deg);
+        }
+
+        .home-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .view {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+            padding-bottom: var(--input-area-height);
+        }
+
+        .view.active {
+            display: flex;
+        }
+
+        .chat-area {
+            flex: 1;
+            width: 100%;
+            overflow-y: auto;
+            padding: 15px;
+            background-color: transparent;
+            scroll-behavior: smooth;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-message {
+            align-items: flex-end;
+        }
+
+        .bot-message {
+            align-items: flex-start;
+        }
+
+        .message-bubble {
+            max-width: 100%;
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 5px;
+            word-wrap: break-word;
+            line-height: 1.4;
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+
+        .user-message .message-bubble {
+            background-color: var(--user-bubble);
+            border-bottom-right-radius: 5px;
+        }
+
+        .bot-message .message-bubble {
+            background-color: var(--bot-bubble);
+            border-bottom-left-radius: 5px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            padding: 12px 15px;
+            background-color: var(--bot-bubble);
+            border-radius: var(--border-radius);
+            border-bottom-left-radius: 5px;
+            margin-bottom: 15px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            width: fit-content;
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--text-color);
+            border-radius: 50%;
+            margin: 0 2px;
+            opacity: 0.4;
+            animation: typingAnimation 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingAnimation {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-5px); opacity: 1; }
+        }
+
+        .input-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            background-color: transparent;
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            z-index: 10;
+            padding: 10px;
+            padding-bottom: env(safe-area-inset-bottom, 10px);
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+            background-color: var(--header-bg);
+            border-radius: 25px;
+            padding: 10px 15px;
+            border: 1px solid var(--header-border);
+            box-shadow: 0 2px 10px var(--shadow);
+            margin: 0 10px;
+        }
+
+        .legal-notice {
+            text-align: center;
+            font-size: 11px;
+            color: var(--legal-text-color);
+            padding: 5px 15px 0;
+            line-height: 1.3;
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: var(--border-radius);
+            outline: none;
+            font-size: 16px;
+            background-color: transparent;
+            color: var(--text-color);
+            overflow-y: auto;
+            max-height: 120px;
+            resize: none;
+        }
+
+        #user-input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+        }
+
+        #send-btn {
+            padding: 10px;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            color: var(--text-color);
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            transition: transform 0.2s;
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+        }
+
+        #send-btn:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            transform: scale(1.1);
+        }
+
+        .settings-menu {
+            position: fixed;
+            right: 20px;
+            top: 60px;
+            background-color: var(--chat-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px var(--shadow);
+            padding: 10px;
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 200px;
+            z-index: 100;
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border: 1px solid var(--header-border);
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .settings-menu.show {
+            display: flex;
+        }
+
+        .settings-menu-btn {
+            padding: 8px 12px;
+            background-color: transparent;
+            border: none;
+            border-radius: 6px;
+            color: var(--text-color);
+            cursor: pointer;
+            text-align: left;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .settings-menu-btn:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .developer-info {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background-color: var(--chat-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 20px var(--shadow);
+            padding: 20px;
+            font-size: 14px;
+            max-width: 300px;
+            width: 90%;
+            display: none;
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border: 1px solid var(--header-border);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .developer-info.show {
+            display: block;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .developer-info a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .dark-mode .developer-info a {
+            color: var(--primary-color);
+        }
+
+        .developer-info a:hover {
+            text-decoration: underline;
+        }
+
+        .developer-info img {
+            width: 16px;
+            height: 16px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .auth-view {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            width: 100%;
+            margin: auto;
+            padding: 20px;
+            overflow-y: auto;
+            padding-bottom: var(--input-area-height);
+        }
+
+        .auth-form {
+            background-color: var(--chat-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px var(--shadow);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border: 1px solid var(--header-border);
+        }
+
+        .auth-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--header-border);
+            border-radius: var(--border-radius);
+            outline: none;
+            font-size: 16px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+        }
+
+        .form-input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: opacity 0.2s;
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+        }
+
+        .form-submit:hover {
+            opacity: 0.9;
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .auth-switch-btn {
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .success-message {
+            color: var(--success-color);
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .history-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            padding-bottom: var(--input-area-height);
+        }
+
+        .history-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: var(--chat-bg);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.2s;
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border: 1px solid var(--header-border);
+        }
+
+        .history-item:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .history-item-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .history-item-preview {
+            color: #999;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .no-history {
+            text-align: center;
+            margin-top: 50px;
+            color: #999;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--header-border);
+            margin-bottom: 5px;
+        }
+
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            color: var(--error-color);
+        }
+
+        @media (max-width: 768px) {
+            .view {
+                padding: 0;
+            }
+            
+            .app-brand h1 {
+                font-size: 20px;
+            }
+            
+            .message-bubble {
+                max-width: 90%;
+            }
+
+            .auth-form {
+                padding: 20px;
+            }
+            
+            :root {
+                --blur-amount: 4px;
+                --input-area-height: 90px;
+            }
+
+            .legal-notice {
+                font-size: 10px;
+                padding: 0 10px 5px 10px;
+            }
+
+            .input-area {
+                margin: 0 5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .legal-notice {
+                font-size: 9px;
+                padding: 0 8px 4px 8px;
+            }
+
+            :root {
+                --input-area-height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-controls">
+            <button class="header-btn home-btn" id="home-btn">⌂</button>
+        </div>
+        <div class="header-controls">
+            <button class="header-btn settings-btn" id="settings-btn">⛯</button>
+        </div>
+    </header>
+
+    <!-- App Branding -->
+    <div class="app-brand" id="app-brand">
+        <img src="https://i.ibb.co/zh55bzNC/banana-logo-new.png" alt="ChatBANANA Logo">
+        <h1>ChatBANANA</h1>
+        <p>আমি আপনাকে কিভাবে সাহায্য করতে পারি?</p>
+    </div>
+
+    <!-- Settings Menu -->
+    <div class="settings-menu" id="settings-menu">
+        <div class="user-info" id="user-info" style="display: none;">
+            <div class="user-avatar" id="user-avatar">U</div>
+            <div id="username-display">User</div>
+        </div>
+        <button class="settings-menu-btn" id="theme-toggle-btn">
+            <span>〄</span> Light Mode
+        </button>
+        <button class="settings-menu-btn" id="history-toggle-btn">
+            <span>📜</span> Chat History
+        </button>
+        <button class="settings-menu-btn" id="login-menu-btn">
+            <span>👤</span> Login
+        </button>
+        <button class="settings-menu-btn" id="register-menu-btn">
+            <span>📝</span> Register
+        </button>
+        <button class="settings-menu-btn" id="new-chat-menu-btn">
+            <span>🆕</span> New Chat
+        </button>
+        <button class="settings-menu-btn logout-btn" id="logout-btn" style="display: none;">
+            <span>🚪</span> Logout
+        </button>
+        <button class="settings-menu-btn" id="developer-toggle-btn">
+            <span>ℹ️</span> About
+        </button>
+    </div>
+
+    <!-- Developer Info Overlay -->
+    <div class="overlay" id="overlay"></div>
+    
+    <!-- Developer Info -->
+    <div class="developer-info" id="developer-info">
+        <strong>Developer:</strong> 
+        <a href="https://www.instagram.com/mehb.een/" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png" alt="Instagram">
+            Rohan
+        </a><br>
+        <strong>Dept.:</strong> Bangla<br>
+        <strong>Season:</strong> 2022-2023<br>
+        <strong>College:</strong> Govt. Tolaram College, Narayanganj<br>
+        <small>This AI was made for fun, so don't take it seriously.</small>
+    </div>
+
+    <!-- Chat View -->
+    <div class="view active" id="chat-view">
+        <div class="chat-area" id="chat-area">
+            <!-- Messages will appear here -->
+        </div>
+    </div>
+
+    <!-- Input Container (now fixed at bottom) -->
+    <div class="input-container">
+        <div class="input-area">
+            <textarea id="user-input" placeholder="এখানে আপনার মেসেজ লিখুন..." autocomplete="off" rows="1"></textarea>
+            <button id="send-btn">➤</button>
+        </div>
+        <div class="legal-notice">By messaging ChatBANANA, you agree to our Terms and have read our Privacy Policy.</div>
+    </div>
+
+    <!-- Login View -->
+    <div class="view" id="login-view">
+        <div class="auth-view">
+            <div class="auth-form">
+                <h2 class="auth-title">লগইন</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email" class="form-label">ইমেইল</label>
+                        <input type="email" id="login-email" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password" class="form-label">পাসওয়ার্ড</label>
+                        <input type="password" id="login-password" class="form-input" required>
+                    </div>
+                    <div id="login-error" class="error-message"></div>
+                    <button type="submit" class="form-submit">লগইন</button>
+                </form>
+                <div class="auth-switch">
+                    <span>একাউন্ট নেই?</span>
+                    <button class="auth-switch-btn" id="go-to-register">রেজিস্টার করুন</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register View -->
+    <div class="view" id="register-view">
+        <div class="auth-view">
+            <div class="auth-form">
+                <h2 class="auth-title">রেজিস্টার</h2>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="register-name" class="form-label">নাম</label>
+                        <input type="text" id="register-name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email" class="form-label">ইমেইল</label>
+                        <input type="email" id="register-email" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password" class="form-label">পাসওয়ার্ড</label>
+                        <input type="password" id="register-password" class="form-input" required>
+                    </div>
+                    <div id="register-error" class="error-message"></div>
+                    <div id="register-success" class="success-message"></div>
+                    <button type="submit" class="form-submit">রেজিস্টার</button>
+                </form>
+                <div class="auth-switch">
+                    <span>ইতিমধ্যে একাউন্ট আছে?</span>
+                    <button class="auth-switch-btn" id="go-to-login">লগইন করুন</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- History View -->
+    <div class="view" id="history-view">
+        <div class="history-list" id="history-list">
+            <h2 style="padding: 20px;">চ্যাট হিস্ট্রি</h2>
+            <div class="no-history" id="no-history">কোনো চ্যাট হিস্ট্রি পাওয়া যায়নি</div>
+            <!-- History items will be added here -->
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const chatArea = document.getElementById('chat-area');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const historyToggleBtn = document.getElementById('history-toggle-btn');
+        const developerToggleBtn = document.getElementById('developer-toggle-btn');
+        const newChatMenuBtn = document.getElementById('new-chat-menu-btn');
+        const homeBtn = document.getElementById('home-btn');
+        const body = document.body;
+        const settingsBtn = document.getElementById('settings-btn');
+        const settingsMenu = document.getElementById('settings-menu');
+        const developerInfo = document.getElementById('developer-info');
+        const overlay = document.getElementById('overlay');
+        const userInfo = document.getElementById('user-info');
+        const userAvatar = document.getElementById('user-avatar');
+        const usernameDisplay = document.getElementById('username-display');
+        const logoutBtn = document.getElementById('logout-btn');
+        const appBrand = document.getElementById('app-brand');
+
+        // Views
+        const chatView = document.getElementById('chat-view');
+        const loginView = document.getElementById('login-view');
+        const registerView = document.getElementById('register-view');
+        const historyView = document.getElementById('history-view');
+        const goToRegister = document.getElementById('go-to-register');
+        const goToLogin = document.getElementById('go-to-login');
+
+        // Auth menu buttons
+        const loginMenuBtn = document.getElementById('login-menu-btn');
+        const registerMenuBtn = document.getElementById('register-menu-btn');
+
+        // Auth forms
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const loginEmail = document.getElementById('login-email');
+        const loginPassword = document.getElementById('login-password');
+        const registerName = document.getElementById('register-name');
+        const registerEmail = document.getElementById('register-email');
+        const registerPassword = document.getElementById('register-password');
+        const loginError = document.getElementById('login-error');
+        const registerError = document.getElementById('register-error');
+        const registerSuccess = document.getElementById('register-success');
+
+        // History elements
+        const historyList = document.getElementById('history-list');
+        const noHistory = document.getElementById('no-history');
+
+        // Current user
+        let currentUser = null;
+        let chatHistory = [];
+        let isTyping = false;
+        let hasUserMessaged = false;
+        
+        // Check if user is logged in from localStorage
+        function checkAuth() {
+            const user = localStorage.getItem('chatBananaUser');
+            if (user) {
+                currentUser = JSON.parse(user);
+                updateAuthUI();
+            }
+        }
+
+        // Update UI based on auth status
+        function updateAuthUI() {
+            if (currentUser) {
+                userInfo.style.display = 'flex';
+                usernameDisplay.textContent = currentUser.name;
+                userAvatar.textContent = currentUser.name.charAt(0).toUpperCase();
+                logoutBtn.style.display = 'block';
+                loginMenuBtn.style.display = 'none';
+                registerMenuBtn.style.display = 'none';
+                
+                // Load user's chat history
+                loadChatHistory();
+            } else {
+                userInfo.style.display = 'none';
+                logoutBtn.style.display = 'none';
+                loginMenuBtn.style.display = 'block';
+                registerMenuBtn.style.display = 'block';
+                usernameDisplay.textContent = 'User';
+                userAvatar.textContent = 'U';
+                
+                // Clear any existing chat history display
+                noHistory.style.display = 'block';
+            }
+            
+            // Reset welcome message state
+            hasUserMessaged = false;
+            appBrand.style.display = 'flex';
+        }
+
+        // Switch between views
+        function showView(view) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            view.classList.add('active');
+            
+            // Close menus when switching views
+            settingsMenu.classList.remove('show');
+            developerInfo.classList.remove('show');
+            overlay.classList.remove('show');
+            
+            // Show app brand in chat view
+            if (view === chatView) {
+                appBrand.style.display = hasUserMessaged ? 'none' : 'flex';
+                userInput.focus();
+            } else {
+                // Always show app brand in other views
+                appBrand.style.display = 'flex';
+            }
+        }
+
+        // Save chat to history
+        function saveChatToHistory(messages) {
+            if (!currentUser) return;
+            
+            const chat = {
+                id: Date.now(),
+                date: new Date(),
+                messages: messages,
+                preview: messages.length > 0 ? messages[messages.length-1].content : ''
+            };
+            
+            // Get existing history or create new array
+            let userHistory = JSON.parse(localStorage.getItem(`catchBananaHistory_${currentUser.email}`)) || [];
+            
+            // Add new chat
+            userHistory.unshift(chat);
+            
+            // Save only the last 50 chats
+            if (userHistory.length > 50) {
+                userHistory = userHistory.slice(0, 50);
+            }
+            
+            localStorage.setItem(`catchBananaHistory_${currentUser.email}`, JSON.stringify(userHistory));
+            chatHistory = userHistory;
+        }
+
+        // Load chat history
+        function loadChatHistory() {
+            if (!currentUser) {
+                noHistory.style.display = 'block';
+                return;
+            }
+            
+            const userHistory = JSON.parse(localStorage.getItem(`catchBananaHistory_${currentUser.email}`)) || [];
+            chatHistory = userHistory;
+            
+            renderHistoryList();
+        }
+
+        // Render history list
+        function renderHistoryList() {
+            historyList.innerHTML = '<h2 style="padding: 20px;">চ্যাট হিস্ট্রি</h2>';
+            
+            if (chatHistory.length === 0) {
+                noHistory.style.display = 'block';
+                return;
+            }
+            
+            noHistory.style.display = 'none';
+            
+            chatHistory.forEach(chat => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.dataset.id = chat.id;
+                
+                const title = document.createElement('div');
+                title.className = 'history-item-title';
+                title.textContent = chat.messages.length > 0 ? 
+                    chat.messages[0].content.substring(0, 30) + (chat.messages[0].content.length > 30 ? '...' : '') : 
+                    'নতুন চ্যাট';
+                
+                const preview = document.createElement('div');
+                preview.className = 'history-item-preview';
+                preview.textContent = chat.preview.substring(0, 50) + (chat.preview.length > 50 ? '...' : '');
+                
+                historyItem.appendChild(title);
+                historyItem.appendChild(preview);
+                
+                historyItem.addEventListener('click', () => {
+                    loadChatFromHistory(chat.id);
+                    showView(chatView);
+                });
+                
+                historyList.appendChild(historyItem);
+            });
+        }
+
+        // Load chat from history
+        function loadChatFromHistory(chatId) {
+            const chat = chatHistory.find(c => c.id == chatId);
+            if (!chat) return;
+            
+            // Clear current chat
+            chatArea.innerHTML = '';
+            
+            // Add messages from history
+            chat.messages.forEach(msg => {
+                addMessage(msg.content, msg.isUser);
+            });
+            
+            // Hide app brand if there are messages
+            if (chat.messages.length > 0) {
+                appBrand.style.display = 'none';
+                hasUserMessaged = true;
+            } else {
+                appBrand.style.display = 'flex';
+                hasUserMessaged = false;
+            }
+            
+            // Scroll to bottom
+            setTimeout(() => {
+                chatArea.scrollTop = chatArea.scrollHeight;
+            }, 10);
+        }
+
+        // Show typing indicator
+        function showTypingIndicator() {
+            if (isTyping) return;
+            
+            isTyping = true;
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typing-indicator';
+            
+            for (let i = 0; i < 3; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'typing-dot';
+                typingDiv.appendChild(dot);
+            }
+            
+            chatArea.appendChild(typingDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        // Hide typing indicator
+        function hideTypingIndicator() {
+            isTyping = false;
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        // All responses without categories
+        const responses = [
+            // General greetings
+            "আসসালামু আলাইকুম! আমি ChatBANANA, কিভাবে আপনাকে সাহায্য করতে পারি?",
+            "হ্যালো! কেমন আছেন আপনি?",
+            "আপনাকে স্বাগতম! আমি কিভাবে আপনাকে সাহায্য করতে পারি?",
+        ];
+
+        // Function to add message to chat
+        function addMessage(message, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            bubbleDiv.textContent = message;
+            
+            messageDiv.appendChild(bubbleDiv);
+            
+            chatArea.appendChild(messageDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+            
+            // Hide app brand after first user message
+            if (isUser && !hasUserMessaged) {
+                hasUserMessaged = true;
+                appBrand.style.display = 'none';
+            }
+            
+            // Return message object for history
+            return {
+                content: message,
+                isUser: isUser,
+                timestamp: Date.now()
+            };
+        }
+
+        // Function to get bot response
+        function getBotResponse(userMessage) {
+            // Simple keyword matching
+            const lowerMsg = userMessage.toLowerCase();
+            
+            if (lowerMsg.includes('হ্যালো') || lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('হাই') || lowerMsg.includes('kire') || lowerMsg.includes('কিরে') || lowerMsg.includes('কীরে') || lowerMsg.includes('কিরে বেডা') || lowerMsg.includes('kire beda')) {
+                return ["কি হয়েছে সোনা?", "কি জানতে চাও বলো", "ভালো আছো"][Math.floor(Math.random() * 3)];
+            } else if (lowerMsg.includes('ধন্যবাদ') || lowerMsg.includes('thank')) {
+                return ["আপনাকে স্বাগতম!", "কোনো সমস্যা না!", "আপনার জন্যই আছি!"][Math.floor(Math.random() * 3)];
+            } else if (lowerMsg.includes('কেমন আছ') || lowerMsg.includes('how are')) {
+                return ["আমি ভালো আছি, ধন্যবাদ! আপনি?", "একদম ফ্রেশ, একটা কলার মত!🍌আপনি?"][Math.floor(Math.random() * 2)];
+            } 
+           
+            // Get random response from all responses
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+
+        // Initialize the app
+        function init() {
+            checkAuth();
+            
+            // Event listeners
+            sendBtn.addEventListener('click', sendMessage);
+            userInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            // Auto-resize textarea
+            userInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+
+            // New chat button
+            newChatMenuBtn.addEventListener('click', () => {
+                // Clear current chat
+                chatArea.innerHTML = '';
+                hasUserMessaged = false;
+                appBrand.style.display = 'flex';
+                showView(chatView);
+            });
+
+            // Home button
+            homeBtn.addEventListener('click', () => {
+                showView(chatView);
+            });
+
+            // Settings menu toggle
+            settingsBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                settingsMenu.classList.toggle('show');
+                developerInfo.classList.remove('show');
+                overlay.classList.remove('show');
+            });
+
+            // Developer info toggle
+            developerToggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                developerInfo.classList.toggle('show');
+                overlay.classList.toggle('show');
+                settingsMenu.classList.remove('show');
+            });
+
+            // Close menus when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!settingsMenu.contains(e.target) && e.target !== settingsBtn) {
+                    settingsMenu.classList.remove('show');
+                }
+                if (!developerInfo.contains(e.target) && e.target !== developerToggleBtn) {
+                    developerInfo.classList.remove('show');
+                    overlay.classList.remove('show');
+                }
+            });
+
+            // Close developer info when clicking overlay
+            overlay.addEventListener('click', () => {
+                developerInfo.classList.remove('show');
+                overlay.classList.remove('show');
+            });
+
+            // Theme toggle
+            themeToggleBtn.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                themeToggleBtn.innerHTML = body.classList.contains('dark-mode') ? '<span>〄</span> Dark Mode' : '<span>〄</span> Light Mode';
+                settingsMenu.classList.remove('show');
+                
+                // Save theme preference
+                localStorage.setItem('catchBananaTheme', body.classList.contains('dark-mode') ? 'dark' : 'light');
+            });
+
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('catchBananaTheme');
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-mode');
+                themeToggleBtn.innerHTML = '<span>〄</span> Dark Mode';
+            }
+
+            // History toggle
+            historyToggleBtn.addEventListener('click', () => {
+                loadChatHistory();
+                showView(historyView);
+                settingsMenu.classList.remove('show');
+            });
+
+            // Navigation
+            loginMenuBtn.addEventListener('click', () => showView(loginView));
+            registerMenuBtn.addEventListener('click', () => showView(registerView));
+            goToRegister.addEventListener('click', () => showView(registerView));
+            goToLogin.addEventListener('click', () => showView(loginView));
+            
+            // Logout
+            logoutBtn.addEventListener('click', logout);
+            
+            // Auth forms
+            loginForm.addEventListener('submit', handleLogin);
+            registerForm.addEventListener('submit', handleRegister);
+
+            // Make developer name clickable
+            document.querySelector('.developer-info a').addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent closing the developer info panel
+            });
+            
+            // Focus input when chat view is shown
+            userInput.focus();
+        }
+
+        // Send message handler
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (message && !isTyping) {
+                const userMsg = addMessage(message, true);
+                userInput.value = '';
+                userInput.style.height = 'auto';
+                
+                // Show typing indicator
+                showTypingIndicator();
+                
+                // Simulate typing delay
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    const botResponse = getBotResponse(message);
+                    const botMsg = addMessage(botResponse, false);
+                    
+                    // Save full conversation to history if logged in
+                    if (currentUser) {
+                        const currentMessages = Array.from(chatArea.querySelectorAll('.message')).map(msgEl => {
+                            return {
+                                content: msgEl.querySelector('.message-bubble').textContent,
+                                isUser: msgEl.classList.contains('user-message'),
+                                timestamp: Date.now()
+                            };
+                        });
+                        saveChatToHistory(currentMessages);
+                    }
+                }, 1000 + Math.random() * 2000); // Random delay between 1-3 seconds
+            }
+        }
+
+        // Login handler
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value.trim();
+            
+            // Simple validation
+            if (!email || !password) {
+                loginError.textContent = 'ইমেইল এবং পাসওয়ার্ড প্রয়োজন';
+                return;
+            }
+            
+            // Check if user exists
+            const users = JSON.parse(localStorage.getItem('catchBananaUsers')) || [];
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                // Login successful
+                currentUser = {
+                    name: user.name,
+                    email: user.email
+                };
+                
+                // Save to localStorage
+                localStorage.setItem('catchBananaUser', JSON.stringify(currentUser));
+                
+                // Update UI
+                updateAuthUI();
+                showView(chatView);
+                
+                // Clear form
+                loginEmail.value = '';
+                loginPassword.value = '';
+                loginError.textContent = '';
+            } else {
+                loginError.textContent = 'ভুল ইমেইল বা পাসওয়ার্ড';
+            }
+        }
+
+        // Register handler
+        function handleRegister(e) {
+            e.preventDefault();
+            
+            const name = registerName.value.trim();
+            const email = registerEmail.value.trim();
+            const password = registerPassword.value.trim();
+            
+            // Simple validation
+            if (!name || !email || !password) {
+                registerError.textContent = 'সমস্ত তথ্য প্রয়োজন';
+                return;
+            }
+            
+            // Check if user already exists
+            const users = JSON.parse(localStorage.getItem('catchBananaUsers')) || [];
+            const userExists = users.some(u => u.email === email);
+            
+            if (userExists) {
+                registerError.textContent = 'এই ইমেইল ইতিমধ্যে ব্যবহৃত হয়েছে';
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                name: name,
+                email: email,
+                password: password
+            };
+            
+            // Save user
+            users.push(newUser);
+            localStorage.setItem('catchBananaUsers', JSON.stringify(users));
+            
+            // Show success message
+            registerError.textContent = '';
+            registerSuccess.textContent = 'রেজিস্ট্রেশন সফল! আপনি এখন লগইন করতে পারেন';
+            
+            // Clear form
+            registerName.value = '';
+            registerEmail.value = '';
+            registerPassword.value = '';
+            
+            // Auto switch to login after 2 seconds
+            setTimeout(() => {
+                showView(loginView);
+                registerSuccess.textContent = '';
+            }, 2000);
+        }
+
+        // Logout handler
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('catchBananaUser');
+            updateAuthUI();
+            showView(chatView);
+        }
+
+        // Initialize the app
+        init();
+    </script>
+</body>
+</html>
+
